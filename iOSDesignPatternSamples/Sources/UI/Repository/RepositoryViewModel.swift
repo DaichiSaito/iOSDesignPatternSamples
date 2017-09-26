@@ -38,8 +38,9 @@ final class RepositoryViewModel {
                 favorites.append(repository)
                 return favorites
             }
-            // to use "onNext" because to avoid sending dispose
-            .subscribe(onNext: { favoritesInput.onNext($0) })
+            // to use ".concat(Observable.never())" because to avoid sending dispose
+            .concat(Observable.never())
+            .bind(to: favoritesInput)
             .disposed(by: disposeBag)
     }
 }
